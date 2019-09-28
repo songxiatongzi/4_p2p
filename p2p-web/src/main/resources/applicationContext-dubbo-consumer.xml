@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:dubo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://code.alibabatech.com/schema/dubbo
+            http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--dubbo服务的消费者-->
+
+    <!-- 配置应用名称 -->
+    <dubbo:application name="p2p"/>
+    <!-- 配置注册中心 -->
+    <dubbo:registry protocol="zookeeper" address="192.168.190.128:2181"/>
+
+    <!--产品业务 声明要使用的远程接口
+        interface: 与服务提供者相对应的接口
+        ref : 接口实现类对象的首字母小写
+    -->
+    <dubbo:reference interface="com.bjpowernode.p2p.service.loan.LoanInfoService"
+                   id="loanInfoServiceImpl" version="1.0.0" check="false"/>
+
+    <!--声明用户业务-->
+    <dubbo:reference interface="com.bjpowernode.p2p.service.user.UserService"
+                     id="userServiceImpl" version="1.0.0" check="false"/>
+
+    <!--声明要使用的投资业务接口-->
+    <dubbo:reference interface="com.bjpowernode.p2p.service.loan.BidInfoService"
+                     id="bidInfoServiceImpl" version="1.0.0" check="false"/>
+
+    <!--声明账户要使用的接口-->
+    <dubo:reference interface="com.bjpowernode.p2p.service.user.FinanceAccountService"
+                    id="financeAccountServiceImpl" version="1.0.0" check="false"/>
+
+    <!--声明redis要使用的接口-->
+    <dubbo:reference interface="com.bjpowernode.p2p.service.loan.RedisService"
+                     id="redisServiceImpl" version="1.0.0" check="false"/>
+
+    <!--声明充值业务的使用者-->
+    <dubbo:reference interface="com.bjpowernode.p2p.service.loan.RechargeRecordService"
+                     id="rechargeRecordServiceImpl" version="1.0.0" check="false"/>
+</beans>
